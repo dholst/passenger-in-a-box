@@ -5,16 +5,14 @@ Vagrant::Config.run do |config|
   config.vm.box = "lucid64"
 
   config.vm.customize do |vm|
-    vm.memory_size = 1024
-    vm.cpus = 4
+    vm.memory_size = 2048
+    vm.cpus = 8
   end
 
   config.vm.network :hostonly, "192.168.51.50"
 
   config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = "chef/cookbooks"
-    chef.add_recipe "apt"
-    chef.add_recipe "apache2"
-    # chef.json = { :mysql_password => "foo" }
+    chef.cookbooks_path = ["chef/cookbooks", "chef/custom_cookbooks"]
+    chef.add_recipe "example_app"
   end
 end
